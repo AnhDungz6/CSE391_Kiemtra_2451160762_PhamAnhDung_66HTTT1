@@ -1,122 +1,77 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import React, { useState } from 'react';
+import Header from './components/Header';
+import ProductForm from './components/ProductForm';
+import ProductTable from '././components/ProductTable';
+import { mockData } from './data/data';
+import './styles/app.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [products, setProducts] = useState(mockData);
+  const [editingProduct, setEditingProduct] = useState(null);
+
+  // Xử lý Thêm hoặc Cập nhật sản phẩm
+  const handleSubmitProduct = (productData) => {
+    if (editingProduct) {
+      // Cập nhật sản phẩm cũ
+      const updatedProducts = products.map((p) =>
+        p.id === editingProduct.id ? { ...p, ...productData } : p
+      );
+      setProducts(updatedProducts);
+      setEditingProduct(null);
+    } else {
+      // Thêm sản phẩm mới
+      const newProduct = {
+        id: Date.now(),
+        ...productData
+      };
+      setProducts([...products, newProduct]);
+    }
+  };
+
+  // Chọn sản phẩm để sửa
+  const handleEditClick = (product) => {
+    setEditingProduct(product);
+  };
+
+  // Xóa sản phẩm
+  const handleDeleteProduct = (id) => {
+    const isConfirmed = window.confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');
+    if (isConfirmed) {
+      setProducts(products.filter((p) => p.id !== id));
+      if (editingProduct && editingProduct.id === id) {
+        setEditingProduct(null);
+      }
+    }
+  };
+
+  // Hủy/Reset trạng thái sửa
+  const handleResetEditing = () => {
+    setEditingProduct(null);
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="container">
+      {/* BANNER ĐẦU TRANG */}
+      <Header />
 
-      <div className="ticks"></div>
+      {/* NỘI DUNG CHÍNH CHIA 2 CỘT */}
+      <main className="main-content">
+        {/* CỘT TRÁI: FORM THÊM/SỬA */}
+        <ProductForm 
+          onSubmit={handleSubmitProduct}
+          editingProduct={editingProduct}
+          onResetEditing={handleResetEditing}
+        />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {/* CỘT PHẢI: BẢNG DANH SÁCH & THỐNG KÊ */}
+        <ProductTable 
+          products={products}
+          onEdit={handleEditClick}
+          onDelete={handleDeleteProduct}
+        />
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;

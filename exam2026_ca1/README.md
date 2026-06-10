@@ -1,16 +1,27 @@
-# React + Vite
+# Dự án Quản lý Sản phẩm (exam2026_ca1)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dự án thiết kế giao diện ứng dụng web Single Page Application (SPA) Quản lý Danh sách Sản phẩm sử dụng thư viện **ReactJS** phối hợp với công cụ xây dựng dự án **Vite**.
 
-Currently, two official plugins are available:
+## Thông tin Sinh Viên
+- **Họ và tên:** Phạm Anh Dũng
+- **Mã số sinh viên:** 2451160762
+- **Lớp học:** 66HTTT1
+- **Đề thi:** Ca 1 - Quản lý Sản phẩm
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Hướng dẫn cài đặt và chạy ứng dụng
 
-## React Compiler
+### Bước 1: Cài đặt các thư viện phụ thuộc (node_modules)
+```bash
+npm install
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Bước 2: Chạy ứng dụng dưới chế độ Development Local Server
+```bash
+npm run dev
+```
+Sau đó mở trình duyệt truy cập vào đường dẫn: `http://localhost:5173/`
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Bước 3: Build dự án cho Production
+```bash
+npm run build
+```
