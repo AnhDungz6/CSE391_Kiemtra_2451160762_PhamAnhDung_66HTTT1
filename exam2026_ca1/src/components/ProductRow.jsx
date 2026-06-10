@@ -1,6 +1,5 @@
-import React from "react";
 
-function ProductRow({ product, index, onEdit, onDelete }) {
+function ProductRow({ product, index }) {
   // Định dạng giá tiền: 24.990.000 đ
   const formatPrice = (price) => {
     return new Intl.NumberFormat("vi-VN").format(price) + " đ";
@@ -17,22 +16,6 @@ function ProductRow({ product, index, onEdit, onDelete }) {
       <td className="price-cell">{formatPrice(product.price)}</td>
       <td>
         <span className={`badge ${badgeClass}`}>{product.status}</span>
-      </td>
-      <td>
-        <div className="action-buttons">
-          <button
-            className="btn-action btn-edit"
-            onClick={() => onEdit(product)}
-          >
-            Sửa
-          </button>
-          <button
-            className="btn-action btn-delete"
-            onClick={() => onDelete(product.id)}
-          >
-            Xóa
-          </button>
-        </div>
       </td>
     </tr>
   );

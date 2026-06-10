@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-function ProductForm({ onSubmit, editingProduct, onResetEditing }) {
+function ProductForm({ onSubmit }) {
   // States cho các trường nhập liệu
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
@@ -14,19 +14,6 @@ function ProductForm({ onSubmit, editingProduct, onResetEditing }) {
     price: ''
   });
 
-  // Theo dõi khi có sản phẩm cần sửa
-  useEffect(() => {
-    if (editingProduct) {
-      setName(editingProduct.name);
-      setCategory(editingProduct.category);
-      setPrice(editingProduct.price.toString());
-      setStatus(editingProduct.status);
-      setErrors({ name: '', category: '', price: '' }); // Xóa hết lỗi
-    } else {
-      resetFormInputs();
-    }
-  }, [editingProduct]);
-
   // Reset form
   const resetFormInputs = () => {
     setName('');
@@ -38,9 +25,6 @@ function ProductForm({ onSubmit, editingProduct, onResetEditing }) {
 
   const handleResetClick = () => {
     resetFormInputs();
-    if (onResetEditing) {
-      onResetEditing();
-    }
   };
 
   // Validate form
@@ -94,12 +78,10 @@ function ProductForm({ onSubmit, editingProduct, onResetEditing }) {
   return (
     <section className="card">
       <h2 className="card-title">
-        {editingProduct ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm mới'}
+        Thêm sản phẩm mới
       </h2>
       <p className="card-subtitle">
-        {editingProduct 
-          ? 'Chỉnh sửa thông tin chi tiết và lưu thay đổi.' 
-          : 'Nhập đầy đủ thông tin để thêm sản phẩm vào danh sách.'}
+        Nhập đầy đủ thông tin để thêm sản phẩm vào danh sách.
       </p>
       
       <form onSubmit={handleSubmit} novalidate>
@@ -167,7 +149,7 @@ function ProductForm({ onSubmit, editingProduct, onResetEditing }) {
         {/* Buttons */}
         <div className="btn-group">
           <button type="submit" className="btn btn-primary">
-            {editingProduct ? 'Lưu thay đổi' : 'Thêm sản phẩm'}
+            Thêm sản phẩm
           </button>
           <button type="button" className="btn btn-secondary" onClick={handleResetClick}>
             Làm mới form
